@@ -1,0 +1,66 @@
+﻿<form id="imagesForm" class="row main" data-bind="submit: save">
+    <div class="col-md-12">
+        <h2 class="text-center">Images</h2>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th> Name </th>
+                    <th> Url </th>
+                    <th class="text-right">
+                        <a data-bind="click: add" class="btn btn-sm btn-primary btn-lg">Add</a>
+                    </th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: images">
+            <tr>
+                <td>
+                    <input type="text" data-bind="value: name" class="form-control" required>
+                </td>
+                <td>
+                    <input type="url" data-bind="value: url" class="form-control" required>
+                </td>
+                <td></td>
+            </tr>
+            </tbody>
+        </table>
+        <p class="text-right">
+            <button type="submit" class="btn btn-sm btn-success btn-lg">Save</button>
+        </p>
+    </div>
+</form>
+
+@section scripts
+{
+    <script type="text/javascript">
+
+        var model = function() {
+
+            var self = this;
+            self.images = ko.observableArray([]);
+
+            self.add = function() {
+                self.images.push({ name: '', url: '' });
+            }
+
+            self.save = function () {
+                $.ajax({
+                    type: "POST",
+                    url: "api/image/create",
+                    data: {
+                        data: self.images()
+                    },
+                    success: function(resp) {
+                        alert("Saved Successfully");
+                        self.images([]);
+                    },
+                    error: function(resp) {
+                        alert("Saved Failed");
+                    }
+                });
+            }
+
+        }
+
+        ko.applyBindings(model, $('#main')[0]);
+    </script>
+}
