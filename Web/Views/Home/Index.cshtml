@@ -1,4 +1,4 @@
-﻿<form id="imagesForm" class="row main" data-bind="submit: save">
+﻿<form id="imagesForm" class="row" data-bind="submit: save">
     <div class="col-md-12">
         <h2 class="text-center">Images</h2>
         <table class="table">
@@ -61,6 +61,6 @@
 
         }
 
-        ko.applyBindings(model, $('#main')[0]);
+        ko.applyBindings(model, $('#imagesForm')[0]);
     </script>
 }
